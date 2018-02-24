@@ -1,0 +1,1 @@
+clang -I/data/data/com.termux/files/usr/include/ncursesw screen1.c -o spust -lncurses
