@@ -9,7 +9,7 @@ int main ()
 	printw("%s","Nazdar");
 
 
-	move(25,25);
+	move(3,25);
         printw("%s","AHOJ");
 	refresh();
 	sleep(10);
