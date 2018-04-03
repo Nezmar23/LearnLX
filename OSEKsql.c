@@ -11,12 +11,6 @@ int main() {
    const unsigned char * slovyC;
    const unsigned char * popisC;
    sqlite3_stmt * s;
-
-
-
-
-   // const unsigned char * datumDB;
-
     // Otevreni databaze
     r = sqlite3_open("data.db", &data);
     if (r != SQLITE_OK) {
@@ -29,8 +23,7 @@ int main() {
     }
 
     // Zpracovani vracenych zaznamu z databaze
-        
-    r = sqlite3_prepare(data,"select pcislo, slovy, NULL, popis from tabulka1",-1, &s, NULL);
+    r = sqlite3_prepare_v2(data,"select pcislo, slovy, NULL, popis from tabulka1",-1, &s, NULL);
       if (r != SQLITE_OK) {
     	    printf("Chyba pri priprave db statement!\n");
      	    exit(EXIT_FAILURE);
@@ -44,18 +37,23 @@ int main() {
             popisC = sqlite3_column_text(s, 3);
             printf("cislo: %d %s %s \n",pcisloC ,slovyC ,popisC);
                                            }			
-//  vypsani tabulka do souboru
-//     sqlite3_prepare_v2(data,"mode list", -1,  *,  NULL);
-  //   sqlite3_prepare_v2(data,"separator |", -1, *,  NULL);
-//     sqlite3_prepare_v2(data,"output file1.txt", -1,  *,  NULL);
-//     sqlite3_prepare(data,"select * from tabulka1",-1,  * ,NULL);
-
-
-
-
-
-
-    // Zavreni db statement
+     sqlite3_reset(s);
+//  vypsani tabulka do souboru  sqlite3_finalize (sqlite3_stmt * pStmt);
+     sqlite3_prepare_v2(data,"mode list", -1, &s,  NULL);
+     sqlite3_step(s);
+     sqlite3_reset(s);
+     sqlite3_prepare_v2(data,"separator |", -1, &s,  NULL);
+     sqlite3_step(s);
+     sqlite3_reset(s);
+     sqlite3_prepare_v2(data,"output file1.txt", -1, &s, NULL);
+     sqlite3_step(s);
+     sqlite3_reset(s);
+     sqlite3_prepare_v2(data,"select pcislo, slovy, NULL, popis from tabulka1",-1, &s  ,NULL);
+     sqlite3_step(s);
+     sqlite3_reset(s);
+    sqlite3_prepare_v2(data,"quit",-1, &s  ,NULL);    
+     
+     // Zavreni db statement
     r = sqlite3_finalize(s);
     if (r != SQLITE_OK) {
         printf("Chyba pri uzavreni db statement!\n");

@@ -1,1 +1,1 @@
-clang SQLiteDemo.c -o sqlitedemo -lsqlite3 -Wall
+clang OSEKsql.c -o sqlitedemo -lsqlite3 -Wall
